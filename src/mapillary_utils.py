@@ -24,7 +24,8 @@ def get_mapillary_image(image_id, api_key, image_size_indicator='thumb_2048_url'
     }
 
     # url = f'https://graph.mapillary.com/{image_id}?fields=thumb_2048_url,captured_at,geometry,height,width'
-    url = f'https://graph.mapillary.com/{image_id}?fields={image_size_indicator},captured_at,geometry,height,width,compass_angle,camera_type,camera_parameters,is_pano'
+    url = f'https://graph.mapillary.com/{image_id}?fields={image_size_indicator},captured_at,geometry,\
+    height,width,compass_angle,computed_compass_angle,camera_type,sequence,camera_parameters,is_pano,altitude'
 
     response = requests.get(url, headers=headers)
     response.raise_for_status()
@@ -36,12 +37,15 @@ def get_mapillary_image(image_id, api_key, image_size_indicator='thumb_2048_url'
     image_id = data.get('id')
     captured_at = data.get('captured_at')
     geometry = data.get('geometry')
-    print(geometry)
-    detections = data.get('detections')
+    #print(geometry)
+    #detections = data.get('detections')
     original_height = data.get('height')
     original_width = data.get('width')
     compass_angle = data.get('compass_angle')
+    computed_compass_angle = data.get('computed_compass_angle')
     camera_type = data.get('camera_type')
+    sequence = data.get('sequence')
+    altitude = data.get('altitude')
     is_pano = data.get('is_pano')
 
     camera_params = data.get("camera_parameters")
@@ -80,11 +84,15 @@ def get_mapillary_image(image_id, api_key, image_size_indicator='thumb_2048_url'
         'height': image.height,
         'width': image.width,
         'camera_type': camera_type,
+        'sequence': sequence,
         'compass_angle': compass_angle,
+        'computed_compass_angle': computed_compass_angle,
         'is_pano': is_pano,
         'camera_focal_len': camera_focal_len,
         'camera_k1': camera_k1,
         'camera_k2': camera_k2,
+        'altitude': altitude,
+        #'detections': detections,
         'image_path_on_disk': save_image_path
 
     }
@@ -176,6 +184,9 @@ def decode_base64_geometry_fromdf(row, normalize=False, image_height=None, image
                 [image_id, detection_id, detection_label, feature_id, image_height, image_width, extent, feature_properties, coord_segment])
 
     # return feature_list
+    # assign this to a variable called "arrays", then these 2 lines of code
+    # temp_df = [pd.DataFrame(arr, columns=['image_id', 'detection_id','detection_label','feature_id','extent','properties','coordinates']) for arr in arrays]
+    # df_detection_coords = pd.concat(temp_df, ignore_index=True)
     return np.array(feature_list, dtype=object)
 
 
