@@ -25,7 +25,7 @@ def filter_detections(detection_label, stop_list=[]):
     """
 
     if len(stop_list) == 0:
-        stop_detection_list = ['regulatory','marking','warning','complementary','object--traffic-sign']
+        stop_detection_list = ['regulatory','marking','warning','complementary','object--traffic-sign','information']
     else:
         stop_detection_list = stop_list
 

@@ -11,7 +11,7 @@ import mapbox_vector_tile
 from matplotlib.path import Path
 
 
-def get_mapillary_image(image_id, api_key, image_size_indicator='thumb_2048_url', image_dir="c:\\temp"):
+def get_mapillary_image(image_id, api_key, image_size_indicator='thumb_2048_url', image_dir="c://temp"):
     def _generate_uuid():
         return uuid.uuid4().hex
 
