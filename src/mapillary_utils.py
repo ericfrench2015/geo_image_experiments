@@ -23,9 +23,8 @@ def get_mapillary_image(image_id, api_key, image_size_indicator='thumb_2048_url'
         'Authorization': f'OAuth {api_key}'
     }
 
-    # url = f'https://graph.mapillary.com/{image_id}?fields=thumb_2048_url,captured_at,geometry,height,width'
-    url = f'https://graph.mapillary.com/{image_id}?fields={image_size_indicator},captured_at,geometry,\
-    height,width,compass_angle,computed_compass_angle,camera_type,sequence,camera_parameters,is_pano,altitude'
+    #url = f'https://graph.mapillary.com/{image_id}' #?fields=captured_at,geometry,height,width'
+    url = f'https://graph.mapillary.com/{image_id}?fields={image_size_indicator},captured_at,geometry,height,width,compass_angle,computed_compass_angle,camera_type,sequence,camera_parameters,is_pano,altitude'
 
     response = requests.get(url, headers=headers)
     response.raise_for_status()

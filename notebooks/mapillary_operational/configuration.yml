@@ -1,0 +1,22 @@
+sys:
+    ## location of where the necessary python files are to run this code
+    # there are a handful of files that get imported
+    # import mapillary_utils as mu
+    # import detection_analysis_utils as dau
+    # 
+    sys_path_append : "D://projects//geo_image_experiments//src" 
+    
+directory_structure:
+    ## base_dir should really be the only thing that needs to change
+    # put the location you want to set as the base directory into which
+    # all other directories and files will go
+    base_dir : "D://projects_working_directories//imagery_analysis//20250210_indonesia//"
+    image_folder : "images"
+    image_metadata_folder : "images_metadata"
+    output_folder : "output"
+
+
+metadata_storage:
+    sqlite3_dbname : "image_metadata_20250210.sqlite3"
+    
+    

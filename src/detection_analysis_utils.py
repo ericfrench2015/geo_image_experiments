@@ -52,14 +52,22 @@ def draw_polygons(polygons, max_x=2200, max_y=1200, display='fill', image_underl
     - normalized_polygon: Normalized polygons (currently not used).
     """
 
+    def _convert_to_numeric(val):
+        if isinstance(val, int) == False:
+            val = int(float(val))
+            return val
+        else:
+            return val
+
     polygons_for_chart = []
 
     for polygon in polygons:
         w = []
         y = []
         for xy in polygon:
-            w.append(xy[0])
-            y.append(xy[1])
+            w.append(_convert_to_numeric(xy[0]))
+            y.append(_convert_to_numeric(xy[1]))
+
         polygons_for_chart.append([w, y])
 
     # set x figsize, then proportionately set y
