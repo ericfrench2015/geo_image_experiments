@@ -27,7 +27,11 @@ def get_mapillary_image(image_id, api_key, image_size_indicator='thumb_2048_url'
     url = f'https://graph.mapillary.com/{image_id}?fields={image_size_indicator},captured_at,geometry,height,width,compass_angle,computed_compass_angle,camera_type,sequence,camera_parameters,is_pano,altitude'
 
     response = requests.get(url, headers=headers)
-    response.raise_for_status()
+    try:
+        response.raise_for_status()  # Raises an error for 4xx or 5xx status codes
+    except requests.exceptions.HTTPError as err:
+        print(f"HTTP error occurred: {err} for image id {image_id}")
+        return 'error', {'error':'error'} # hack for today... I'm sick
 
     # Get the image URL and metadata from the response
     data = response.json()

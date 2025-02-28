@@ -134,16 +134,25 @@ def detect_relative_pixel_count(coords, step_down=0.01):
     # max_x = max_x * step_down
     # max_y = max_y * step_down
 
-    x = np.arange(min_x, max_x + 1)
-    y = np.arange(min_y, max_y + 1)
-    xx, yy = np.meshgrid(x, y)
-    points = np.c_[xx.ravel(), yy.ravel()]
+    #x = np.arange(min_x, max_x + 1)
+    #y = np.arange(min_y, max_y + 1)
+    #xx, yy = np.meshgrid(x, y)
+    #points = np.c_[xx.ravel(), yy.ravel()]
+
+
+    path = mplPath.Path(small_coords)
+
+    # Generate grid of points using meshgrid
+    x_range = np.arange(min_x, max_x + 1)
+    y_range = np.arange(min_y, max_y + 1)
+
+    xx, yy = np.meshgrid(x_range, y_range)
+    points = np.c_[xx.ravel(), yy.ravel()]  # Flatten to (N,2) array
 
     # Step 3: Check which points lie within the polygon
-    path = mplPath.Path(small_coords)
-    mask = path.contains_points(small_coords)
+    inside_mask = path.contains_points(points)
 
     # Step 4: Count the number of pixels (points) within the polygon
-    num_pixels_within_polygon = np.sum(mask)
+    num_pixels_within_polygon = np.sum(inside_mask)
     return num_pixels_within_polygon
     # print(f'Number of pixels within the polygon: {num_pixels_within_polygon}')
